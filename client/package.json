@@ -1,7 +1,8 @@
 {
   "name": "react-monitor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "homepage": "http://localhost",
   "dependencies": {
     "immutable": "^3.8.1",
     "material-ui": "^0.18.0",

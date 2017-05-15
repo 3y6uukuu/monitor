@@ -1,14 +1,14 @@
 {
   "license": "UNLICENSED",
   "name": "peal-monitor-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "private": true,
   "description": "PEAL monitor server",
   "author": {
     "name": "Denys Zubitskyi",
     "email" : "denis_zubitskyi@epam.com"
   },
   "scripts": {
-    "prestart": "npm install",
     "start": "node ./app.js"
   },
   "main": "./app.js",

@@ -9,7 +9,7 @@ class Logger {
 
         this.logsDir = `logs/${country}`;
 
-        if (!fs.existsSync(this.logsDir)) fs.mkdirSync(this.logsDir);
+        Logger.mkdirSyncRecursive(this.logsDir);
 
         this.winstonLogger = new (winston.Logger)({
             transports: [
@@ -26,6 +26,20 @@ class Logger {
             ],
             exitOnError: false,
         });
+    }
+
+    static mkdirSyncRecursive(path) {
+        try {
+            const dirs = path.split('/');
+
+            for (let i = 1; i <= dirs.length; i++) {
+                const dir = dirs.slice(0, i).join('/');
+
+                !fs.existsSync(dir) && fs.mkdirSync(dir);
+            }
+        } catch (error) {
+            console.log(`mkdirSyncRecursive => ${error}`);
+        }
     }
 
     static isUp(statusCode) {
@@ -82,7 +96,7 @@ class Logger {
                         resolve({failedRequests, totalRequests});
                     });
             } catch (error) {
-                console.log(`getRequestsQuantity(): ${error}`);
+                console.log(`getRequestsQuantity => ${error}`);
                 reject(error);
             }
         });
@@ -108,7 +122,7 @@ class Logger {
                     });
 
             } catch (error) {
-                console.log(`getRequests(): ${error}`);
+                console.log(`getRequests => ${error}`);
                 reject(error);
             }
         });

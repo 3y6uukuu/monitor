@@ -25,7 +25,7 @@ const {
 
 const Logger = require('../utils/Logger');
 
-let Loggers = {};
+const Loggers = {};
 
 async function promiseHandler(payload, response, params, service) {
     const [statusCode, ] = payload;

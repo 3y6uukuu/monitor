@@ -1,0 +1,35 @@
+/* Heartbeat */
+.heartbeat {
+    height: 35%;
+    margin-top: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.heartbeat__cardiogram {
+    transform: scale(2);
+}
+
+#pulsar {
+    stroke-dasharray: 281;
+    animation: dash 2.5s infinite linear forwards;
+}
+
+#jugular {
+    stroke-dasharray: 497;
+    animation: dash 1.4s infinite ease forwards;
+}
+
+#flat {
+    stroke-dasharray: 200;
+    animation: dash 10s infinite linear;
+}
+
+@keyframes dash{
+    from {
+        stroke-dashoffset: 814;
+    }
+    to {
+        stroke-dashoffset: -814;
+    }
+}

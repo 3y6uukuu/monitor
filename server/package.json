@@ -1,0 +1,26 @@
+{
+  "license": "UNLICENSED",
+  "name": "peal-monitor-server",
+  "version": "0.1.0",
+  "description": "PEAL monitor server",
+  "author": {
+    "name": "Denys Zubitskyi",
+    "email" : "denis_zubitskyi@epam.com"
+  },
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node ./app.js"
+  },
+  "main": "./app.js",
+  "engines": {
+    "node": ">=7.6.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "request": "^2.81.0",
+    "winston": "^2.3.1",
+    "winston-daily-rotate-file": "^1.4.6"
+  },
+  "devDependencies": {}
+}

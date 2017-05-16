@@ -9,9 +9,9 @@
     "email" : "denis_zubitskyi@epam.com"
   },
   "scripts": {
-    "start": "node ./app.js"
+    "start": "node ./index.js"
   },
-  "main": "./app.js",
+  "main": "./index.js",
   "engines": {
     "node": ">=7.6.0"
   },

@@ -18,7 +18,7 @@ cd client/
 npm install
 ```
 
-##Usage
+## Usage
 ```
 cd server/
 npm run start
@@ -30,8 +30,14 @@ npm run build
 serve -s build
 ```
 
-##Development
+## Development
 ```
 cd client/
 npm run start
+```
+
+## Configs
+```
+server/config.js
+client/src/config/index.js
 ```

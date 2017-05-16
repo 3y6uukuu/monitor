@@ -1,29 +1,43 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getCountry, getUserId} from './Login/selectors';
 import Drawer from 'material-ui/Drawer';
 import RaisedButton from 'material-ui/RaisedButton';
 import Login from './Login';
 
-class Customer extends React.Component {
+class Customer extends Component {
     constructor(props) {
         super(props);
-        this.state = {open: false};
+
+        this.state = {
+            drawerIsOpen: false
+        };
     }
 
-    handleToggle = () => this.setState({open: !this.state.open});
+    handleToggle() {
+        const {drawerIsOpen} = this.state;
 
-    handleClose = () => this.setState({open: false});
+        this.setState({
+            drawerIsOpen: !drawerIsOpen,
+        });
+    }
+
+    handleClose() {
+        this.setState({
+            drawerIsOpen: false,
+        });
+    }
 
     render() {
         const {country, userId} = this.props;
+        const {drawerIsOpen} = this.state;
         const logInLabel = (country && userId) ? `${country} | ${userId}` : 'Enter User Data';
 
         return (
             <div>
-                <RaisedButton label={logInLabel} onTouchTap={this.handleToggle}/>
+                <RaisedButton label={logInLabel} onTouchTap={() => this.handleToggle()}/>
 
-                <Drawer docked={false} width={290} open={this.state.open} onRequestChange={open => this.setState({open})}>
+                <Drawer docked={false} width={290} open={drawerIsOpen} onRequestChange={drawerIsOpen => this.setState({drawerIsOpen})}>
                     <Login onLogIn={() => this.handleClose()} />
                 </Drawer>
             </div>

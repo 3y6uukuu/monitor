@@ -46,6 +46,7 @@ class Toggler extends Component {
         return (
             <div>
                 <Toggle defaultToggled={true} toggled={!disabled} onToggle={() => this.update()} />
+
                 <Snackbar
                     open={snackbarIsOpen}
                     message={`Service "${this.formatServiceTitle(id)}" will be ${disabled ? 'DISABLED' : 'ENABLED'} during next check`}

@@ -40,7 +40,7 @@ class RequestsCounter extends Component {
                 <span style={totalRequestsStyles}> / {total}</span>
             </div>
         )
-    };
+    }
 }
 
 const mapStateToProps = (state, props) => ({

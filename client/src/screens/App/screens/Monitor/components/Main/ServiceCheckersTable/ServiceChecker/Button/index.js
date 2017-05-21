@@ -97,7 +97,7 @@ class Button extends Component {
         return (
             <div>
                 <Dialog
-                    actions={[<FlatButton label="OK" onTouchTap={() => this.handleCloseModal()}/>]}
+                    actions={[<FlatButton key="OK" label="OK" onTouchTap={() => this.handleCloseModal()}/>]}
                     modal={false}
                     open={modalIsOpen}
                     onRequestClose={() => this.handleCloseModal()}

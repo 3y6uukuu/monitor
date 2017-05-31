@@ -43,6 +43,8 @@ import {
     postMobileAllowance,
 } from './api';
 
+import {getBlockingRequestStatus, apiResponseHandler} from '../../../../sagas/helpers'
+
 const COMMON_ACTIONS = [
     GET_FRESH_ACCESS_TOKEN_SUCCESS,
     GET_FRESH_ACCESS_TOKEN_FAILURE,
@@ -65,8 +67,6 @@ const PENDING_ACTIONS = [
     SERVICES_IDS.GET_TOKEN,
     SERVICES_IDS.GET_FRESH_ACCESS_TOKEN,
 ];
-
-import {getBlockingRequestStatus, apiResponseHandler} from '../../../../sagas/helpers'
 
 function* handleGetProfile() {
     while (true) {

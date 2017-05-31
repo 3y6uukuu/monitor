@@ -6,7 +6,7 @@
   "description": "PEAL monitor server",
   "author": {
     "name": "Denys Zubitskyi",
-    "email" : "denis_zubitskyi@epam.com"
+    "email": "denis_zubitskyi@epam.com"
   },
   "scripts": {
     "start": "node ./index.js"

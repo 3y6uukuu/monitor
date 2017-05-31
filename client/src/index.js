@@ -12,11 +12,11 @@ import Routes from './config/routes';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-injectTapEventPlugin();
-
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 // import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+
+injectTapEventPlugin();
 
 //TODO: remove from window object
 window.store = configureStore();

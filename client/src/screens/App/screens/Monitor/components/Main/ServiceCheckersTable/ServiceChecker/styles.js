@@ -3,9 +3,9 @@ export const togglerColumn = {
 };
 
 export const buttonColumn = {
-    width: '180px',
+    width: '140px',
 };
 
 export const requestsCounterColumn = {
-    width: '100px',
+    width: '80px',
 };

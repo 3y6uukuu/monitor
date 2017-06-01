@@ -5,8 +5,8 @@ import {
 } from './styles';
 
 const Title = props =>
-    <div style={titleStyles}>
+    <h2 style={titleStyles}>
         {props.title} <sup style={supStyles}>({props.method})</sup>
-    </div>;
+    </h2>;
 
 export default Title;

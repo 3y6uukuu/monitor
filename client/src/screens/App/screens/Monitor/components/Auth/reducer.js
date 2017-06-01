@@ -15,17 +15,15 @@ const initial = Map({
 });
 
 function updateTokensState(state, payload) {
-    let tokenState = {};
+    let tokenState = {
+        accessToken: null,
+        refreshToken: null,
+    };
 
     if (payload) {
         tokenState = {
             accessToken: payload.body.access_token,
             refreshToken: payload.body.refresh_token,
-        }
-    } else {
-        tokenState = {
-            accessToken: null,
-            refreshToken: null,
         }
     }
 

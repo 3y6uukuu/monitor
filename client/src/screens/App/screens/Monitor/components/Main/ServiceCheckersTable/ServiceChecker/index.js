@@ -4,7 +4,7 @@ import Toggler from './Toggler';
 import Title from './Title';
 import Button from './Button';
 import RequestsCounter from './RequestsCounter';
-import {togglerColumn, buttonColumn, requestsCounterColumn} from './styles';
+import {togglerColumn, titleColumn, buttonColumn, requestsCounterColumn} from './styles';
 
 const ServiceChecker = props =>
     <TableRow hoverable={true} style={{...props.style}}>
@@ -12,7 +12,7 @@ const ServiceChecker = props =>
             <Toggler {...props} />
         </TableRowColumn>
 
-        <TableRowColumn>
+        <TableRowColumn style={titleColumn}>
             <Title {...props} />
         </TableRowColumn>
 

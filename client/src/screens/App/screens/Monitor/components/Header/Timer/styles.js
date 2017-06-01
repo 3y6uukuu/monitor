@@ -1,8 +1,7 @@
-import {grey200, pink500, grey800} from 'material-ui/styles/colors';
+import {pink500, grey800} from 'material-ui/styles/colors';
 
 export const timer = {
     padding: 0,
-    backgroundColor: grey200,
 };
 
 export const timerTitle = {

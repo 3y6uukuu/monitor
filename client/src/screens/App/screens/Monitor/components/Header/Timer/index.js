@@ -122,7 +122,7 @@ class Timer extends Component {
         return (
             <Toolbar style={timer}>
                 <ToolbarGroup>
-                    <ToolbarTitle text={(workInProgress && password) ? 'Next check after:' : 'Next check at:'} style={timerTitle}/>
+                    <ToolbarTitle text={(workInProgress && password) ? 'Next check after:' : 'Next check at:'} style={timerTitle} />
 
                     <div ref={clock => {this.clock = clock;}} style={timerCountdown}>
                         {startTime}

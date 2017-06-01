@@ -44,18 +44,18 @@ class Form extends Component {
             <form style={login} onSubmit={handleSubmit}>
                 <Field name="country" component={event => this.renderSelectField(event)} label="Country">
                     {CUSTOMER.DEFAULT_DATA.map(customer =>
-                        <MenuItem key={customer.COUNTRY} value={customer.COUNTRY} primaryText={customer.COUNTRY}/>
+                        <MenuItem key={customer.COUNTRY} value={customer.COUNTRY} primaryText={customer.COUNTRY} />
                     )}
                 </Field>
 
-                <Field name="userId" type="email" component={this.renderTextField} label="User ID"/>
+                <Field name="userId" type="email" component={this.renderTextField} label="User ID" />
 
-                <Field name="password" type="password" component={this.renderTextField} label="Password"/>
+                <Field name="password" type="password" component={this.renderTextField} label="Password" />
 
                 <div style={loginButtons}>
-                    <RaisedButton type="submit" label="Start" disabled={submitting}/>
+                    <RaisedButton type="submit" label="Start" disabled={submitting} />
 
-                    <RaisedButton style={loginReset} type="button" label="Reset Form" disabled={pristine || submitting}  onTouchTap={reset}/>
+                    <RaisedButton style={loginReset} type="button" label="Reset Form" disabled={pristine || submitting}  onTouchTap={reset} />
                 </div>
             </form>
         );

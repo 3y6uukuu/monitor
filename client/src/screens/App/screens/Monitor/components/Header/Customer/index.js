@@ -35,7 +35,7 @@ class Customer extends Component {
 
         return (
             <div>
-                <RaisedButton label={logInLabel} onTouchTap={() => this.handleToggle()}/>
+                <RaisedButton label={logInLabel} onTouchTap={() => this.handleToggle()} />
 
                 <Drawer docked={false} width={290} open={drawerIsOpen} onRequestChange={drawerIsOpen => this.setState({drawerIsOpen})}>
                     <Login onLogIn={() => this.handleClose()} />
@@ -45,7 +45,7 @@ class Customer extends Component {
     }
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
     country: getCountry(state),
     userId: getUserId(state),
 });

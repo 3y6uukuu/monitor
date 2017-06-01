@@ -16,6 +16,11 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "react/jsx-tag-spacing": [1, {
+            "closingSlash": "never",
+            "beforeSelfClosing": "always",
+            "afterOpening": "never"
+        }],
         "react/prop-types": 0,
         "accessor-pairs": "error",
         "array-bracket-spacing": [

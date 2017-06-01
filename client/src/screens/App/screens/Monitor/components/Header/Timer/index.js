@@ -133,7 +133,7 @@ class Timer extends Component {
     }
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
     startTime: getStartTime(state),
     endTime: getEndTime(state),
     interval: getInterval(state),

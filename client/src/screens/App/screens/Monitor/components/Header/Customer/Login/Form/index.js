@@ -62,8 +62,6 @@ class Form extends Component {
     }
 }
 
-Form = reduxForm({
+export default reduxForm({
     form: 'login',
 })(Form);
-
-export default Form;

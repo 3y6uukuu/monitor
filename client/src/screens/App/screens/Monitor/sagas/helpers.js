@@ -51,4 +51,3 @@ export function* apiResponseHandler(id, response, successCallback, errorCallback
     yield put(updateButtonState({id, status}));
     yield put(updateRequestsCounters({id, failedRequests, totalRequests}));
 }
-

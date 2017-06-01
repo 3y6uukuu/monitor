@@ -22,16 +22,12 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = (state, props) => (
-    state => ({
-        initialValues: {
-            country: CUSTOMER.DEFAULT_DATA[0].COUNTRY,
-            userId: CUSTOMER.DEFAULT_DATA[0].USER_ID,
-            password: CUSTOMER.DEFAULT_DATA[0].PASSWORD,
-        }
-    })
-);
+const mapStateToProps = () => ({
+    initialValues: {
+        country: CUSTOMER.DEFAULT_DATA[0].COUNTRY,
+        userId: CUSTOMER.DEFAULT_DATA[0].USER_ID,
+        password: CUSTOMER.DEFAULT_DATA[0].PASSWORD,
+    }
+});
 
-Login = connect(mapStateToProps)(Login);
-
-export default Login;
+export default connect(mapStateToProps)(Login);

@@ -12,9 +12,19 @@ export const CUSTOMER = {
             PASSWORD: 'Passwd11',
             COUNTRY: 'CH',
         },
+        // {
+        //     USER_ID: 'connect_03@hispeed.ch',
+        //     PASSWORD: 'UPCpmiSIM0',
+        //     COUNTRY: 'CH_PROD',
+        // },
+        // {
+        //     USER_ID: '6553373@byom.de',
+        //     PASSWORD: 'UPCrelman0',
+        //     COUNTRY: 'CH_PROD',
+        // },
         {
-            USER_ID: 'connect_03@hispeed.ch',
-            PASSWORD: 'UPCpmiSIM0',
+            USER_ID: 'francesca.ortenzio@upc.ch',
+            PASSWORD: 'Testfran1',
             COUNTRY: 'CH_PROD',
         },
         {
@@ -22,6 +32,11 @@ export const CUSTOMER = {
             PASSWORD: 'Testtest1',
             COUNTRY: 'AT',
         },
+        // {
+        //     USER_ID: '32562803@upc-test.at',
+        //     PASSWORD: 'Testtest1',
+        //     COUNTRY: 'AT',
+        // },
     ],
 };
 

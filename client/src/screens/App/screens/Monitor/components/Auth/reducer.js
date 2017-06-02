@@ -21,10 +21,8 @@ function updateTokensState(state, payload) {
     };
 
     if (payload) {
-        tokenState = {
-            accessToken: payload.body.access_token,
-            refreshToken: payload.body.refresh_token,
-        }
+        tokenState.accessToken = payload.body.access_token;
+        tokenState.refreshToken = payload.body.refresh_token;
     }
 
     return state.merge(Map(tokenState));

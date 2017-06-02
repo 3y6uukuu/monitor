@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {createAction} from 'redux-actions';
 import {getStatus, getParams} from '../selectors';
-import {getUserId, getPassword} from '../../../../Header/Customer/Login/selectors';
+import {userDataEntered} from '../../../../Header/Customer/Login/selectors';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -66,11 +66,10 @@ class Button extends Component {
 
         id = (id === SERVICES_IDS.GET_TOKEN) ? SERVICES_IDS.GET_CODE : id;
 
-        // TODO: look for a better place for userId & password validation
         if (id === SERVICES_IDS.GET_CODE) {
-            const {userId, password} = this.props;
+            const {userDataEntered} = this.props;
 
-            if (userId && password) {
+            if (userDataEntered) {
                 const action = createAction(id);
                 dispatch(action({id}));
             } else {
@@ -115,8 +114,7 @@ class Button extends Component {
 const mapStateToProps = (state, props) => ({
     status: getStatus(state, props.id),
     props: getParams(state, props.id),
-    userId: getUserId(state),
-    password: getPassword(state),
+    userDataEntered: userDataEntered(state),
 });
 
 export default connect(mapStateToProps)(Button);

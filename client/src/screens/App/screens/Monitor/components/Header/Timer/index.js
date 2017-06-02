@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 
 import {getStartTime, getEndTime, getInterval, getWorkProgressState} from './selectors';
-import {getPassword} from '../Customer/Login/selectors';
+import {userDataEntered} from '../Customer/Login/selectors';
 import {getDisabledStatus} from '../../Main/ServiceCheckersTable/ServiceChecker/selectors';
 
 import {work, sleep} from '../../../actions';
@@ -21,10 +21,10 @@ class Timer extends Component {
     }
 
     componentWillUpdate(nextProps) {
-        const {workInProgress, startTime, password, getCodeDisabled} = nextProps;
+        const {workInProgress, startTime, userDataEntered, getCodeDisabled} = nextProps;
 
         if (workInProgress) {
-            (!getCodeDisabled && password) && this.checkWorkingDayHours();
+            (!getCodeDisabled && userDataEntered) && this.checkWorkingDayHours();
         } else {
             this.clearTimeouts();
             this.updateView({state: 'STOPPED', time: startTime});
@@ -117,12 +117,12 @@ class Timer extends Component {
     }
 
     render() {
-        const {startTime, workInProgress, password} = this.props;
+        const {startTime, workInProgress, userDataEntered} = this.props;
 
         return (
-            <Toolbar style={timer}>
+            <Toolbar style={{...timer, display: userDataEntered ? 'block' : 'none'}}>
                 <ToolbarGroup>
-                    <ToolbarTitle text={(workInProgress && password) ? 'Next check after:' : 'Next check at:'} style={timerTitle} />
+                    <ToolbarTitle text={workInProgress ? 'Next check after:' : 'Next check at:'} style={timerTitle} />
 
                     <div ref={clock => {this.clock = clock;}} style={timerCountdown}>
                         {startTime}
@@ -138,7 +138,7 @@ const mapStateToProps = state => ({
     endTime: getEndTime(state),
     interval: getInterval(state),
     workInProgress: getWorkProgressState(state),
-    password: getPassword(state),
+    userDataEntered: userDataEntered(state),
     getCodeDisabled: getDisabledStatus(state, SERVICES_IDS.GET_CODE),
 });
 

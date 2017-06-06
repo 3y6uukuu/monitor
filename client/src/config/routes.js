@@ -7,8 +7,8 @@ import Monitor from '../screens/App/screens/Monitor';
 const Routes = props => (
     <ConnectedRouter {...props}>
         <App>
-            <Route exact path="/" component={Monitor}/>
-            <Redirect from="/*" to="/"/>
+            <Route exact path="/" component={Monitor} />
+            <Redirect from="/*" to="/" />
         </App>
     </ConnectedRouter>
 );

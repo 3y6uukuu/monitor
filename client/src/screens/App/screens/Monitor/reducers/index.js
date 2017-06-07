@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import {combineReducers} from 'redux-immutable';
 import timer from '../components/Header/Timer/reducer';
 import auth from '../components/Auth/reducer';
 import customer from '../components/Header/Customer/Login/reducer';

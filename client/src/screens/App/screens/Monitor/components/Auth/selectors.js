@@ -1,3 +1,3 @@
-export const getAccessCode = state => state.monitor.auth.get('accessCode');
-export const getAccessToken = state => state.monitor.auth.get('accessToken');
-export const getRefreshToken = state => state.monitor.auth.get('refreshToken');
+export const getAccessCode = state => state.monitor.getIn(['auth', 'accessCode']);
+export const getAccessToken = state => state.monitor.getIn(['auth', 'accessToken']);
+export const getRefreshToken = state => state.monitor.getIn(['auth', 'refreshToken']);

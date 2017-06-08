@@ -11,15 +11,15 @@ const initial = Map({
     }),
 });
 
-const updateTimerState = (state, payload) => state.set('workInProgress', payload);
+const updateState = (state, payload) => state.set('workInProgress', payload);
 
 function timer(state = initial.get('timer'), {type}) {
     switch (type) {
         case WORK:
-            return updateTimerState(state, true);
+            return updateState(state, true);
 
         case SLEEP:
-            return updateTimerState(state, false);
+            return updateState(state, false);
 
         default:
             return state;

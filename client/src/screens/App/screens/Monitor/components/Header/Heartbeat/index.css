@@ -1,14 +1,11 @@
-/* Heartbeat */
 .heartbeat {
-    height: 35%;
-    margin-top: 2px;
-    position: relative;
-    overflow: hidden;
+    height: 56px;
+    width: 130px;
 }
 
-.heartbeat__cardiogram {
-    transform: scale(2);
-}
+/*.heartbeat svg {*/
+    /*transform: scale(1);*/
+/*}*/
 
 #pulsar {
     stroke-dasharray: 281;
@@ -21,15 +18,15 @@
 }
 
 #flat {
-    stroke-dasharray: 200;
-    animation: dash 10s infinite linear;
+    stroke-dasharray: 100;
+    animation: dash 3s infinite linear;
 }
 
-@keyframes dash{
+@keyframes dash {
     from {
-        stroke-dashoffset: 814;
+        stroke-dashoffset: 0;
     }
     to {
-        stroke-dashoffset: -814;
+        stroke-dashoffset: -400;
     }
 }

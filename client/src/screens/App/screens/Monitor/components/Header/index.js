@@ -12,12 +12,12 @@ const Header = () =>
             <ToolbarGroup>
                 <Customer />
             </ToolbarGroup>
+            {/*<ToolbarGroup>*/}
+                {/*<Heartbeat />*/}
+            {/*</ToolbarGroup>*/}
             <ToolbarGroup>
                 <Timer />
             </ToolbarGroup>
-            {/*<ToolbarGroup>*/}
-            {/*<Heartbeat />*/}
-            {/*</ToolbarGroup>*/}
         </Toolbar>
     </Paper>;
 

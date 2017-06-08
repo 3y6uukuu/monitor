@@ -89,11 +89,6 @@ export const SERVICES = [
         method: 'GET',
     },
     {
-        id: SERVICES_IDS.GET_MOBILE_ALLOWANCE,
-        title: 'Customer Mobile Usage allowance',
-        method: 'GET',
-    },
-    {
         id: SERVICES_IDS.GET_WIFI_ROAMING_STATUS,
         title: 'Community Wi-Fi roaming status',
         method: 'GET',
@@ -116,16 +111,21 @@ export const SERVICES = [
         params: {wifiPassword: 'somePassworD1'},
     },
     {
+        id: SERVICES_IDS.GET_MOBILE_ALLOWANCE,
+        title: 'Customer Mobile Usage allowance',
+        method: 'GET',
+    },
+    {
         id: SERVICES_IDS.POST_MOBILE_ALLOWANCE_ROAMING,
         title: 'Mobile allowance "ROAMING"',
         method: 'POST',
-        params: {subscriberId: '30743', msisdn: '0784071964', currentAllowance: [{allowanceType: 'ROAMING', allowanceValue: 200}]},
+        params: {},
     },
     {
         id: SERVICES_IDS.POST_MOBILE_ALLOWANCE_SPENDING,
         title: 'Mobile allowance "SPENDING"',
         method: 'POST',
-        params: {subscriberId: '30743', msisdn: '0784071964', currentAllowance: [{allowanceType: 'SPENDING', allowanceValue: 300}]},
+        params: {},
     },
 ];
 

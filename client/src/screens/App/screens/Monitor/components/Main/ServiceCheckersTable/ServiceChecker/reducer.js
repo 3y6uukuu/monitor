@@ -1,9 +1,10 @@
-import {Map, List} from 'immutable';
-import {SERVICES} from '../../../../../../../../config';
+import {Map, List, fromJS} from 'immutable';
+import {SERVICES, SERVICES_IDS} from '../../../../../../../../config';
 import {
     UPDATE_BUTTON_STATE,
     UPDATE_REQUESTS_COUNTERS,
     DISABLE_SERVICE,
+    GET_MOBILE_ALLOWANCE_SUCCESS,
 } from '../../../../actions';
 
 function generateServiceCheckers(services) {
@@ -51,6 +52,22 @@ function toggleDisabledState(state, payload) {
     return state.setIn([index, 'disabled'], !currentState);
 }
 
+function updateMobileAllowanceParams(state, payload) {
+    return state.map(service => service.withMutations(mutableState => {
+        const mutableStateId = mutableState.get('id');
+        const {POST_MOBILE_ALLOWANCE_ROAMING, POST_MOBILE_ALLOWANCE_SPENDING} = SERVICES_IDS;
+
+        // TODO: get allowanceValue from currentAllowance
+        const {subscriberId, msisdn} = payload.body[0].subscriberAllowances[0];
+
+        if (mutableStateId === POST_MOBILE_ALLOWANCE_ROAMING) {
+            mutableState.mergeIn(['params'], fromJS({subscriberId, msisdn, currentAllowance: [{allowanceType: 'ROAMING', allowanceValue: 200}]}));
+        } else if (mutableStateId === POST_MOBILE_ALLOWANCE_SPENDING) {
+            mutableState.mergeIn(['params'], fromJS({subscriberId, msisdn, currentAllowance: [{allowanceType: 'SPENDING', allowanceValue: 300}]}));
+        }
+    }));
+}
+
 function servicesCheckers(state = initial.get('servicesCheckers'), {type, payload}) {
     switch (type) {
         case UPDATE_BUTTON_STATE:
@@ -61,6 +78,9 @@ function servicesCheckers(state = initial.get('servicesCheckers'), {type, payloa
 
         case DISABLE_SERVICE:
             return toggleDisabledState(state, payload);
+
+        case GET_MOBILE_ALLOWANCE_SUCCESS:
+            return updateMobileAllowanceParams(state, payload);
 
         default:
             return state;

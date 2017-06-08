@@ -14,7 +14,15 @@ import {
     GET_FRESH_ACCESS_TOKEN_FAILURE,
     GET_FRESH_ACCESS_TOKEN_DISABLED,
 
+    GET_MOBILE_ALLOWANCE_SUCCESS,
+    GET_MOBILE_ALLOWANCE_FAILURE,
+    GET_MOBILE_ALLOWANCE_DISABLED,
+
     updateButtonState,
+
+    getMobileAllowanceSuccess,
+    getMobileAllowanceFailure,
+    getMobileAllowanceDisabled,
 } from '../../../../actions';
 
 import {
@@ -43,7 +51,7 @@ import {
     postMobileAllowance,
 } from './api';
 
-import {getBlockingRequestStatus, apiResponseHandler} from '../../../../sagas/helpers'
+import {getBlockingRequestStatus, apiResponseHandler} from '../../../../sagas/helpers';
 
 const COMMON_ACTIONS = [
     GET_FRESH_ACCESS_TOKEN_SUCCESS,
@@ -63,7 +71,9 @@ const STOP_ACTIONS = [
 
 const PENDING_ACTIONS = [
     WORK,
+
     SERVICES_IDS.GET_CODE,
+
     SERVICES_IDS.GET_TOKEN,
     SERVICES_IDS.GET_FRESH_ACCESS_TOKEN,
 ];
@@ -188,30 +198,6 @@ function* handleGetUserWiFiData() {
     }
 }
 
-function* handleGetMobileAllowance() {
-    while (true) {
-        const id = SERVICES_IDS.GET_MOBILE_ALLOWANCE;
-
-        const {type} = yield take([id, ...COMMON_ACTIONS, ...PENDING_ACTIONS, ...STOP_ACTIONS]);
-
-        const disabled = yield select(disabledStatusFromStore, id);
-
-        const blockingRequestStatus = getBlockingRequestStatus(type, disabled, PENDING_ACTIONS, STOP_ACTIONS);
-
-        if (blockingRequestStatus === null) {
-            const country = yield select(countryFromStore);
-            const accessToken = yield select(accessTokenFromStore);
-
-            yield put(updateButtonState({id, status: 'PENDING'}));
-            const response = yield call(getMobileAllowance, {country, accessToken});
-
-            yield apiResponseHandler(id, response, null, null);
-        } else {
-            yield put(updateButtonState({id, status: blockingRequestStatus}));
-        }
-    }
-}
-
 function* handlePostWiFiCredentials() {
     while (true) {
         const id = SERVICES_IDS.POST_WIFI_CREDENTIALS;
@@ -266,15 +252,47 @@ function* handlePostNewWiFiCredentials() {
     }
 }
 
-function* handlePostMobileAllowanceRoaming() {
+function* handleGetMobileAllowance() {
     while (true) {
-        const id = SERVICES_IDS.POST_MOBILE_ALLOWANCE_ROAMING;
+        const id = SERVICES_IDS.GET_MOBILE_ALLOWANCE;
 
         const {type} = yield take([id, ...COMMON_ACTIONS, ...PENDING_ACTIONS, ...STOP_ACTIONS]);
 
         const disabled = yield select(disabledStatusFromStore, id);
-        
+
         const blockingRequestStatus = getBlockingRequestStatus(type, disabled, PENDING_ACTIONS, STOP_ACTIONS);
+
+        if (blockingRequestStatus === null) {
+            const country = yield select(countryFromStore);
+            const accessToken = yield select(accessTokenFromStore);
+
+            yield put(updateButtonState({id, status: 'PENDING'}));
+            const response = yield call(getMobileAllowance, {country, accessToken});
+
+            yield apiResponseHandler(id, response, getMobileAllowanceSuccess, getMobileAllowanceFailure);
+        } else {
+            yield put(updateButtonState({id, status: blockingRequestStatus}));
+
+            if (disabled) {
+                yield put(getMobileAllowanceDisabled());
+            }
+        }
+    }
+}
+
+function* handlePostMobileAllowanceRoaming() {
+    while (true) {
+        const id = SERVICES_IDS.POST_MOBILE_ALLOWANCE_ROAMING;
+
+        const commonActions = [GET_MOBILE_ALLOWANCE_SUCCESS]; //, ...COMMON_ACTIONS
+        const pendingActions = [SERVICES_IDS.GET_MOBILE_ALLOWANCE, ...PENDING_ACTIONS];
+        const stopActions = [GET_MOBILE_ALLOWANCE_FAILURE, GET_MOBILE_ALLOWANCE_DISABLED, ...STOP_ACTIONS];
+
+        const {type} = yield take([id, ...commonActions, ...pendingActions, ...stopActions]);
+
+        const disabled = yield select(disabledStatusFromStore, id);
+        
+        const blockingRequestStatus = getBlockingRequestStatus(type, disabled, pendingActions, stopActions);
 
         if (blockingRequestStatus === null) {
             const country = yield select(countryFromStore);
@@ -296,11 +314,15 @@ function* handlePostMobileAllowanceSpending() {
     while (true) {
         const id = SERVICES_IDS.POST_MOBILE_ALLOWANCE_SPENDING;
 
-        const {type} = yield take([id, ...COMMON_ACTIONS, ...PENDING_ACTIONS, ...STOP_ACTIONS]);
+        const commonActions = [GET_MOBILE_ALLOWANCE_SUCCESS]; //, ...COMMON_ACTIONS
+        const pendingActions = [SERVICES_IDS.GET_MOBILE_ALLOWANCE, ...PENDING_ACTIONS];
+        const stopActions = [GET_MOBILE_ALLOWANCE_FAILURE, GET_MOBILE_ALLOWANCE_DISABLED, ...STOP_ACTIONS];
+
+        const {type} = yield take([id, ...commonActions, ...pendingActions, ...stopActions]);
 
         const disabled = yield select(disabledStatusFromStore, id);
 
-        const blockingRequestStatus = getBlockingRequestStatus(type, disabled, PENDING_ACTIONS, STOP_ACTIONS);
+        const blockingRequestStatus = getBlockingRequestStatus(type, disabled, pendingActions, stopActions);
 
         if (blockingRequestStatus === null) {
             const country = yield select(countryFromStore);

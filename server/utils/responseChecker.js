@@ -6,8 +6,6 @@ function isDown(statusCode) {
     return !isUp(statusCode);
 }
 
-
-
 module.exports = {
     isUp,
     isDown

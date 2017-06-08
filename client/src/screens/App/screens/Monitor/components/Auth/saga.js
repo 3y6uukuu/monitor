@@ -140,7 +140,8 @@ function* handleGetFreshToken() {
         } else {
             yield put(updateButtonState({id, status: blockingRequestStatus}));
 
-            if (!PENDING_ACTIONS.includes(type) && !STOP_ACTIONS.includes(type) && disabled) {
+            // TODO: if (!PENDING_ACTIONS.includes(type) && !STOP_ACTIONS.includes(type) && disabled) {
+            if (disabled) {
                 yield put(getFreshAccessTokenDisabled());
             }
         }

@@ -41,6 +41,14 @@ export const updateButtonState = createAction(UPDATE_BUTTON_STATE);
 export const updateRequestsCounters = createAction(UPDATE_REQUESTS_COUNTERS);
 export const disableService = createAction(DISABLE_SERVICE);
 
+// Mobile allowance
+export const GET_MOBILE_ALLOWANCE_SUCCESS = 'GET_MOBILE_ALLOWANCE_SUCCESS';
+export const GET_MOBILE_ALLOWANCE_FAILURE = 'GET_MOBILE_ALLOWANCE_FAILURE';
+export const GET_MOBILE_ALLOWANCE_DISABLED = 'GET_MOBILE_ALLOWANCE_DISABLED';
+
+export const getMobileAllowanceSuccess = createAction(GET_MOBILE_ALLOWANCE_SUCCESS);
+export const getMobileAllowanceFailure = createAction(GET_MOBILE_ALLOWANCE_FAILURE);
+export const getMobileAllowanceDisabled = createAction(GET_MOBILE_ALLOWANCE_DISABLED);
 
 // Timer
 export const WORK = 'WORK';

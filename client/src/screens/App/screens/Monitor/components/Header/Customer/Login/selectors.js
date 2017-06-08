@@ -1,8 +1,10 @@
 import {createSelector} from 'reselect';
 
-export const getCountry = state => state.monitor.getIn(['customer', 'country']);
-export const getUserId = state => state.monitor.getIn(['customer', 'userId']);
-// export const getCustomerId = state => state.monitor.getIn(['customer', 'customerId']);
-export const getPassword = state => state.monitor.getIn(['customer', 'password']);
+const getCustomer = state => state.getIn(['monitor', 'customer']);
+
+export const getCountry = state => getCustomer(state).get('country');
+export const getUserId = state => getCustomer(state).get('userId');
+// export const getCustomerId = state => getCustomer(state).get('customerId');
+export const getPassword = state => getCustomer(state).get('password');
 
 export const userDataEntered = createSelector(getUserId, getPassword, (userId, password) => userId && password);

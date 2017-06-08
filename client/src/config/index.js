@@ -17,16 +17,16 @@ export const CUSTOMER = {
         //     PASSWORD: 'UPCpmiSIM0',
         //     COUNTRY: 'CH_PROD',
         // },
-        // {
-        //     USER_ID: '6553373@byom.de',
-        //     PASSWORD: 'UPCrelman0',
-        //     COUNTRY: 'CH_PROD',
-        // },
         {
-            USER_ID: 'francesca.ortenzio@upc.ch',
-            PASSWORD: 'Testfran1',
+            USER_ID: '6553373@byom.de',
+            PASSWORD: 'UPCrelman0',
             COUNTRY: 'CH_PROD',
         },
+        // {
+        //     USER_ID: 'francesca.ortenzio@upc.ch',
+        //     PASSWORD: 'Testfran1',
+        //     COUNTRY: 'CH_PROD',
+        // },
         {
             USER_ID: '32562252@upc-test.at',
             PASSWORD: 'Testtest1',
@@ -131,6 +131,6 @@ export const SERVICES = [
 
 export const TIMER = {
     interval: 2,
-    startTime: '09:00',
-    endTime: '17:00',
+    startTime: '00:02',
+    endTime: '23:58',
 };

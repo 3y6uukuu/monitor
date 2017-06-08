@@ -1,7 +1,9 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import {createStore, applyMiddleware} from 'redux';
+import {combineReducers} from 'redux-immutable';
+import {persistStore, autoRehydrate} from 'redux-persist-immutable';
 import {routerMiddleware, routerReducer} from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
+import {composeWithDevTools} from 'redux-devtools-extension';
 import {createLogger} from 'redux-logger';
 
 import history from './history';
@@ -9,35 +11,33 @@ import {reducer as formReducer} from 'redux-form/immutable';
 import monitorReducer from '../screens/App/screens/Monitor/reducers';
 
 import monitorSaga from '../screens/App/screens/Monitor/sagas';
+import {Iterable} from 'immutable';
 
-function configureStore(initialState) {
+function configureStore() {
     const routerHistoryMiddleware = routerMiddleware(history);
     const sagaMiddleware = createSagaMiddleware();
     const loggerMiddleware = createLogger({
-        duration: true,
         collapsed: true,
-        // stateTransformer: state => {
-        //     const {monitor} = state;
-        //
-        //     if (Immutable.Iterable.isIterable(monitor)) {
-        //         state.monitor = monitor.toJS();
-        //     }
-        //
-        //     return state;
-        // }
+        diff: true,
+        stateTransformer: state => (Iterable.isIterable(state) ? state.toJS() : state),
     });
 
     const store = createStore(
         combineReducers({
+            // TODO:
             router: routerReducer,
             form: formReducer,
             monitor: monitorReducer,
         }),
-        {...initialState},
-        composeWithDevTools(applyMiddleware(routerHistoryMiddleware, sagaMiddleware, loggerMiddleware))
+        composeWithDevTools(
+            applyMiddleware(routerHistoryMiddleware, sagaMiddleware, loggerMiddleware),
+            autoRehydrate()
+        )
     );
 
     sagaMiddleware.run(monitorSaga);
+
+    persistStore(store, {whitelist: ['monitor']});
 
     return store;
 }

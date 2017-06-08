@@ -3,6 +3,8 @@ const SERVER = {
     PORT: '3300',
 };
 
+const PEAL_TIMEOUT = 10 * 1000;
+
 const PEAL_API = {
     CH: {
         AUTH: {
@@ -235,5 +237,6 @@ const PEAL_API = {
 module.exports = {
     SERVER,
     PEAL_API,
+    PEAL_TIMEOUT,
 };
 

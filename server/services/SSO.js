@@ -1,4 +1,4 @@
-const {PEAL_API} = require('../config');
+const {PEAL_API, PEAL_TIMEOUT} = require('../config');
 const request = require('request');
 const {isDown} = require('../utils/responseChecker');
 
@@ -12,7 +12,8 @@ function getUserWiFiCredentials(country, token) {
             qs: SSO.PARAMS,
             headers: {
                 'Authorization': `Bearer ${token}`
-            }
+            },
+            timeout: PEAL_TIMEOUT,
         }, (error, response, body) => {
             const statusCode = (response && response.statusCode) || 503;
 

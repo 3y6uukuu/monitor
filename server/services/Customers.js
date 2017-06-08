@@ -1,4 +1,4 @@
-const {PEAL_API} = require('../config');
+const {PEAL_API, PEAL_TIMEOUT} = require('../config');
 const request = require('request');
 const {isDown} = require('../utils/responseChecker');
 
@@ -12,7 +12,8 @@ function getProfile(country, token) {
             qs: CUSTOMERS.SHARED.PARAMS,
             headers: {
                 'Authorization': `Bearer ${token}`
-            }
+            },
+            timeout: PEAL_TIMEOUT,
         }, (error, response, body) => {
             const statusCode = (response && response.statusCode) || 503;
 
@@ -47,7 +48,8 @@ function getProducts(country, token) {
             qs: CUSTOMERS.SHARED.PARAMS,
             headers: {
                 'Authorization': `Bearer ${token}`
-            }
+            },
+            timeout: PEAL_TIMEOUT,
         }, (error, response, body) => {
             const statusCode = (response && response.statusCode) || 503;
 
@@ -78,7 +80,8 @@ function getUsage(country, token) {
             qs: Object.assign(CUSTOMERS.USAGE.PARAMS, CUSTOMERS.SHARED.PARAMS),
             headers: {
                 'Authorization': `Bearer ${token}`
-            }
+            },
+            timeout: PEAL_TIMEOUT,
         }, (error, response, body) => {
             const statusCode = (response && response.statusCode) || 503;
 
@@ -109,7 +112,8 @@ function getWiFiRoamingStatus(country, token) {
             qs: CUSTOMERS.SHARED.PARAMS,
             headers: {
                 'Authorization': `Bearer ${token}`
-            }
+            },
+            timeout: PEAL_TIMEOUT,
         }, (error, response, body) => {
             const statusCode = (response && response.statusCode) || 503;
 
@@ -143,7 +147,8 @@ function postWiFiCredentials(country, token, wifiPassword) {
             },
             json: {
                 'wifiPassword': `${wifiPassword}`
-            }
+            },
+            timeout: PEAL_TIMEOUT,
         }, (error, response, body) => {
             const statusCode = (response && response.statusCode) || 503;
 
@@ -176,7 +181,8 @@ function communityWiFiOptIn(country, token, wifiPassword, userId) {
             json: {
                 'wifiPassword': `${wifiPassword}`,
                 'userId': `${userId}`
-            }
+            },
+            timeout: PEAL_TIMEOUT,
         }, (error, response, body) => {
             const statusCode = (response && response.statusCode) || 503;
 
@@ -205,7 +211,8 @@ function getMobileAllowance(country, token) {
             qs: CUSTOMERS.SHARED.PARAMS,
             headers: {
                 'Authorization': `Bearer ${token}`
-            }
+            },
+            timeout: PEAL_TIMEOUT,
         }, (error, response, body) => {
             const statusCode = (response && response.statusCode) || 503;
 
@@ -241,7 +248,8 @@ function postMobileAllowance(country, token, subscriberId, msisdn, currentAllowa
             },
             headers: {
                 'Authorization': `Bearer ${token}`
-            }
+            },
+            timeout: PEAL_TIMEOUT,
         }, (error, response, body) => {
             const statusCode = (response && response.statusCode) || 503;
 

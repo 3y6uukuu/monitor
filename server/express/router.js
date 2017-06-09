@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const express = require('express');
 const router = express.Router();
 
@@ -19,33 +18,28 @@ const {
     postMobileAllowance,
 } = require('../services/Customers');
 
-const {
-    getUserWiFiCredentials,
-} = require('../services/SSO');
+const {getUserWiFiCredentials} = require('../services/SSO');
 
 const Logger = require('../utils/Logger');
 
 const Loggers = {};
 
 async function promiseHandler(payload, response, params, service) {
-    const [statusCode, ] = payload;
-    let [, parsedBody] = payload;
-
+    const {statusCode, body} = payload;
     const {country} = params;
+
     if (!country) throw new Error(`Country param: "${country}" – wasn't received`);
 
-    if (!Loggers[country]) {
-        Loggers[country] = new Logger(country);
-    }
+    if (!Loggers[country]) Loggers[country] = new Logger(country);
 
     // Write/Read information about requests
-    await Loggers[country].write(service, params, statusCode, parsedBody);
+    await Loggers[country].write(service, params, statusCode, body);
 
     const {failedRequests, totalRequests} = await Loggers[country].getRequestsQuantity(service);
 
     response
         .status(statusCode)
-        .json({body: parsedBody, failedRequests, totalRequests});
+        .json({body, failedRequests, totalRequests});
 }
 
 // Auth

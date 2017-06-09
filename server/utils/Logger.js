@@ -62,12 +62,12 @@ class Logger {
      * @param {String} service name
      * @param {Object} params
      * @param {Number} statusCode
-     * @param {String} parsedBody
+     * @param {String} body
      * @returns {Promise}
      */
-    write(service, params, statusCode, parsedBody) {
+    write(service, params, statusCode, body) {
         return new Promise(resolve => {
-            const message = Logger.isUp(statusCode) ? 'Successful request' : parsedBody;
+            const message = Logger.isUp(statusCode) ? 'Successful request' : body;
             this.winstonLogger.error({service, params, statusCode, message}, () => resolve());
         });
     }

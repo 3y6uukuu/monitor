@@ -18,16 +18,16 @@ function getUserWiFiCredentials(country, token) {
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else if (isDown(statusCode)) {
-                reject([statusCode, `${body}`]);
+                reject({statusCode, body: `${body}`});
             } else {
                 try {
                     const parsedBody = JSON.parse(body);
 
-                    resolve([statusCode, parsedBody]);
+                    resolve({statusCode, body: parsedBody});
                 } catch (parseError) {
-                    reject([statusCode, `${parseError}`]);
+                    reject({statusCode, body: `${parseError}`});
                 }
             }
         });

@@ -18,20 +18,20 @@ function getProfile(country, token) {
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else if (isDown(statusCode)) {
-                reject([statusCode, `${body}`]);
+                reject({statusCode, body: `${body}`});
             } else {
                 try {
                     const parsedBody = JSON.parse(body);
 
                     if (parsedBody.customerNumber) {
-                        resolve([statusCode, parsedBody]);
+                        resolve({statusCode, body: parsedBody});
                     } else {
-                        reject([statusCode, '"customerNumber" doesn\'t exist']);
+                        reject({statusCode, body: '"customerNumber" doesn\'t exist'});
                     }
                 } catch (parseError) {
-                    reject([statusCode, `${parseError}`]);
+                    reject({statusCode, body: `${parseError}`});
                 }
             }
         });
@@ -54,16 +54,16 @@ function getProducts(country, token) {
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else if (isDown(statusCode)) {
-                reject([statusCode, `${body}`]);
+                reject({statusCode, body: `${body}`});
             } else {
                 try {
                     const parsedBody = JSON.parse(body);
 
-                    resolve([statusCode, parsedBody]);
+                    resolve({statusCode, body: parsedBody});
                 } catch (parseError) {
-                    reject([statusCode, `${parseError}`]);
+                    reject({statusCode, body: `${parseError}`});
                 }
             }
         });
@@ -86,16 +86,16 @@ function getUsage(country, token) {
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else if (isDown(statusCode)) {
-                reject([statusCode, `${body}`]);
+                reject({statusCode, body: `${body}`});
             } else {
                 try {
                     const parsedBody = JSON.parse(body);
 
-                    resolve([statusCode, parsedBody]);
+                    resolve({statusCode, body: parsedBody});
                 } catch (parseError) {
-                    reject([statusCode, `${parseError}`]);
+                    reject({statusCode, body: `${parseError}`});
                 }
             }
         });
@@ -118,16 +118,16 @@ function getWiFiRoamingStatus(country, token) {
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else if (isDown(statusCode)) {
-                reject([statusCode, `${body}`]);
+                reject({statusCode, body: `${body}`});
             } else {
                 try {
                     const parsedBody = JSON.parse(body);
 
-                    resolve([statusCode, parsedBody]);
+                    resolve({statusCode, body: parsedBody});
                 } catch (parseError) {
-                    reject([statusCode, `${parseError}`]);
+                    reject({statusCode, body: `${parseError}`});
                 }
             }
         });
@@ -153,14 +153,14 @@ function postWiFiCredentials(country, token, wifiPassword) {
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else if (isDown(statusCode)) {
-                reject([statusCode, `${body}`]);
+                reject({statusCode, body: `${body}`});
             } else {
                 if (body === '202:Submitted') {
-                    resolve([statusCode, {body}]);
+                    resolve({statusCode, body});
                 } else {
-                    reject([statusCode, 'body !== "202:Submitted"']);
+                    reject({statusCode, body: 'body !== "202:Submitted"'});
                 }
             }
         });
@@ -187,14 +187,14 @@ function communityWiFiOptIn(country, token, wifiPassword, userId) {
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else if (isDown(statusCode)) {
-                reject([statusCode, `${body}`]);
+                reject({statusCode, body: `${body}`});
             } else {
                 if (body === '202:Submitted') {
-                    resolve([statusCode, {body}]);
+                    resolve({statusCode, body});
                 } else {
-                    reject([statusCode, 'body !== "202:Submitted"']);
+                    reject({statusCode, body: 'body !== "202:Submitted"'});
                 }
             }
         });
@@ -217,16 +217,16 @@ function getMobileAllowance(country, token) {
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else if (isDown(statusCode)) {
-                reject([statusCode, `${body}`]);
+                reject({statusCode, body: `${body}`});
             } else {
                 try {
                     const parsedBody = JSON.parse(body);
 
-                    resolve([statusCode, parsedBody]);
+                    resolve({statusCode, body: parsedBody});
                 } catch (parseError) {
-                    reject([statusCode, `${parseError}`]);
+                    reject({statusCode, body: `${parseError}`});
                 }
             }
         });
@@ -254,14 +254,14 @@ function postMobileAllowance(country, token, subscriberId, msisdn, currentAllowa
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else if (isDown(statusCode)) {
-                reject([statusCode, `${body}`]);
+                reject({statusCode, body: `${body}`});
             } else {
                 if (body === 'Success') {
-                    resolve([statusCode, {body}]);
+                    resolve({statusCode, body});
                 } else {
-                    reject([statusCode, 'body !== "Success"']);
+                    reject({statusCode, body: 'body !== "Success"'});
                 }
             }
         });

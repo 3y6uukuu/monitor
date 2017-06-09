@@ -8,7 +8,7 @@ function getAccessCode(country, userId, password) {
     const GET_CODE = AUTH.GET_CODE;
     const PARAMS = GET_CODE.PARAMS;
 
-    const bodyParams = Object.assign(PARAMS.BODY, {password: password});
+    const bodyParams = Object.assign(PARAMS.BODY, {password});
 
     if (country.indexOf('CH') > -1) {
         bodyParams.userId = userId;
@@ -38,18 +38,20 @@ function getAccessCode(country, userId, password) {
             }
 
             function handleResponse(req, response) {
-                const statusCode = (response && response.statusCode) || 503;
+                let statusCode = (response && response.statusCode) || 503;
 
                 try {
                     const matched = req.uri.query && req.uri.query.match(/en&code=(.*)/);
 
                     if (matched) {
-                        resolve([200, {accessCode: matched[1]}]);
+                        statusCode = 200;
+                        resolve({statusCode, body: {accessCode: matched[1]}});
                     } else {
-                        reject([404, 'Response doesn\'t contain access code']);
+                        statusCode = 404;
+                        reject({statusCode, body: 'Response doesn\'t contain access code'});
                     }
                 } catch (error) {
-                    reject([statusCode, `${error}`]);
+                    reject({statusCode, body: `${error}`});
                 }
             }
         });
@@ -67,25 +69,25 @@ function getAccessToken(country, code) {
         request({
             method: 'POST',
             uri: `${GET_TOKEN.URI}`,
-            form: Object.assign(PARAMS, SHARED_PARAMS, {code: code}),
+            form: Object.assign(PARAMS, SHARED_PARAMS, {code}),
         }, (error, response, body) => {
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else {
                 try {
                     const parsedBody = JSON.parse(body);
 
                     if (parsedBody.access_token && parsedBody.refresh_token) {
-                        resolve([statusCode, parsedBody]);
+                        resolve({statusCode, body: parsedBody});
                     } else if (parsedBody.error) {
-                        reject([statusCode, `${JSON.stringify(parsedBody)}`]);
+                        reject({statusCode, body: `${parsedBody}`});
                     } else {
-                        reject([statusCode, '"access_token" or "refresh_token" doesn\'t exist']);
+                        reject({statusCode, body: '"access_token" or "refresh_token" doesn\'t exist'});
                     }
                 } catch (error) {
-                    reject([statusCode, `${error}`]);
+                    reject({statusCode, body: `${error}`});
                 }
             }
         });
@@ -107,18 +109,18 @@ function getFreshAccessToken(country, refreshToken) {
             const statusCode = (response && response.statusCode) || 503;
 
             if (error) {
-                reject([statusCode, `${error}`]);
+                reject({statusCode, body: `${error}`});
             } else {
                 try {
                     const parsedBody = JSON.parse(body);
 
                     if (parsedBody.access_token) {
-                        resolve([statusCode, parsedBody]);
+                        resolve({statusCode, body: parsedBody});
                     } else {
-                        reject([statusCode, '"access_token" doesn\'t exist']);
+                        reject({statusCode, body: '"access_token" doesn\'t exist'});
                     }
                 } catch (error) {
-                    reject([statusCode, `${error}`]);
+                    reject({statusCode, body: `${error}`});
                 }
             }
         });

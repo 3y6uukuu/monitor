@@ -10,11 +10,18 @@ function getAccessCode(country, userId, password) {
 
     const bodyParams = Object.assign(PARAMS.BODY, {password});
 
-    if (country.indexOf('CH') > -1) {
-        bodyParams.userId = userId;
-        bodyParams.URL = encodeURIComponent(PARAMS.BODY_PARTS.URL + '?' + querystring.stringify(Object.assign(PARAMS.BODY_PARTS.GET, SHARED_PARAMS)));
-    } else {
-        bodyParams.username = userId;
+    switch (country) {
+        case 'CH':
+        case 'CH_PROD':
+            bodyParams.userId = userId;
+            bodyParams.URL = encodeURIComponent(PARAMS.BODY_PARTS.URL + '?' + querystring.stringify(Object.assign(PARAMS.BODY_PARTS.GET, SHARED_PARAMS)));
+
+            break;
+
+        case 'AT':
+            bodyParams.username = userId;
+
+            break;
     }
 
     return new Promise((resolve, reject) => {
@@ -25,18 +32,6 @@ function getAccessCode(country, userId, password) {
             jar: true,
             followAllRedirects: true,
         }, (error, response) => {
-            if (country.indexOf('CH') > -1) {
-                handleResponse(req, response);
-            } else {
-                req = request({
-                    method: 'GET',
-                    uri: PARAMS.CALLBACK.URI + '?' + querystring.stringify(Object.assign(PARAMS.CALLBACK.GET, SHARED_PARAMS)),
-                    jar: true
-                }, () => {
-                    handleResponse(req, response);
-                });
-            }
-
             function handleResponse(req, response) {
                 let statusCode = (response && response.statusCode) || 503;
 
@@ -53,6 +48,25 @@ function getAccessCode(country, userId, password) {
                 } catch (error) {
                     reject({statusCode, body: `${error}`});
                 }
+            }
+
+            switch (country) {
+                case 'CH':
+                case 'CH_PROD':
+                    handleResponse(req, response);
+
+                    break;
+
+                case 'AT':
+                    req = request({
+                        method: 'GET',
+                        uri: PARAMS.CALLBACK.URI + '?' + querystring.stringify(Object.assign(PARAMS.CALLBACK.GET, SHARED_PARAMS)),
+                        jar: true
+                    }, () => {
+                        handleResponse(req, response);
+                    });
+
+                    break;
             }
         });
     });

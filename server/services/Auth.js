@@ -19,9 +19,13 @@ function getAccessCode(country, userId, password) {
             break;
 
         case 'AT':
+        case 'AT_PROD':
             bodyParams.username = userId;
 
             break;
+
+        default:
+            throw new Error(`"${country}" – unknown country param`);
     }
 
     return new Promise((resolve, reject) => {
@@ -36,7 +40,7 @@ function getAccessCode(country, userId, password) {
                 let statusCode = (response && response.statusCode) || 503;
 
                 try {
-                    const matched = req.uri.query && req.uri.query.match(/en&code=(.*)/);
+                    const matched = req.uri.query && req.uri.query.match(/&code=(.*)/);
 
                     if (matched) {
                         statusCode = 200;
@@ -58,6 +62,7 @@ function getAccessCode(country, userId, password) {
                     break;
 
                 case 'AT':
+                case 'AT_PROD':
                     req = request({
                         method: 'GET',
                         uri: PARAMS.CALLBACK.URI + '?' + querystring.stringify(Object.assign(PARAMS.CALLBACK.GET, SHARED_PARAMS)),
@@ -67,6 +72,9 @@ function getAccessCode(country, userId, password) {
                     });
 
                     break;
+
+                default:
+                    throw new Error(`"${country}" – unknown country param`);
             }
         });
     });

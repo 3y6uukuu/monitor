@@ -37,6 +37,11 @@ export const CUSTOMER = {
         //     PASSWORD: 'Testtest1',
         //     COUNTRY: 'AT',
         // },
+        {
+            USER_ID: 'cloudtest@chello.at',
+            PASSWORD: 'Cpu230986',
+            COUNTRY: 'AT_PROD',
+        },
     ],
 };
 

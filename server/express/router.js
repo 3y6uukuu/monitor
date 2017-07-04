@@ -1,5 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const nsKeyMirror = require('nskeymirror');
+
+// TODO: make cross apps dependency
+const SERVICES_IDS = nsKeyMirror({
+    GET_CODE: null,
+    GET_TOKEN: null,
+    GET_FRESH_ACCESS_TOKEN: null,
+    GET_PROFILE: null,
+    GET_PRODUCTS: null,
+    GET_USAGE: null,
+    GET_WIFI_ROAMING_STATUS: null,
+    GET_USER_WIFI_CREDENTIALS: null,
+    GET_MOBILE_ALLOWANCE: null,
+    POST_WIFI_CREDENTIALS: null,
+    COMMUNITY_WIFI_OPT_IN: null,
+    POST_MOBILE_ALLOWANCE_ROAMING: null,
+    POST_MOBILE_ALLOWANCE_SPENDING: null,
+}, 'SERVICE');
 
 const {
     getAccessCode,
@@ -28,7 +46,7 @@ async function promiseHandler(payload, response, params, service) {
     const {statusCode, body} = payload;
     const {country} = params;
 
-    if (!country) throw new Error(`Country param: "${country}" – wasn't received`);
+    if (!country) throw new Error(`country param: "${country}"`);
 
     if (!Loggers[country]) Loggers[country] = new Logger(country);
 
@@ -49,8 +67,8 @@ router.route('/getAccessCode')
         const {country, userId, password} = body;
 
         return getAccessCode(country, userId, password)
-            .then(payload => promiseHandler(payload, response, body, 'getAccessCode'))
-            .catch(payload => promiseHandler(payload, response, body, 'getAccessCode'));
+            .then(payload => promiseHandler(payload, response, body, SERVICES_IDS.GET_CODE))
+            .catch(payload => promiseHandler(payload, response, body, SERVICES_IDS.GET_CODE));
     });
 
 router.route('/getAccessToken')
@@ -59,8 +77,8 @@ router.route('/getAccessToken')
         const {country, accessCode} = body;
 
         return getAccessToken(country, accessCode)
-            .then(payload => promiseHandler(payload, response, body, 'getAccessToken'))
-            .catch(payload => promiseHandler(payload, response, body, 'getAccessToken'));
+            .then(payload => promiseHandler(payload, response, body, SERVICES_IDS.GET_TOKEN))
+            .catch(payload => promiseHandler(payload, response, body, SERVICES_IDS.GET_TOKEN));
     });
 
 router.route('/getFreshAccessToken')
@@ -69,8 +87,8 @@ router.route('/getFreshAccessToken')
         const {country, refreshToken} = body;
 
         return getFreshAccessToken(country, refreshToken)
-            .then(payload => promiseHandler(payload, response, body, 'getFreshAccessToken'))
-            .catch(payload => promiseHandler(payload, response, body, 'getFreshAccessToken'));
+            .then(payload => promiseHandler(payload, response, body, SERVICES_IDS.GET_FRESH_ACCESS_TOKEN))
+            .catch(payload => promiseHandler(payload, response, body, SERVICES_IDS.GET_FRESH_ACCESS_TOKEN));
     });
 
 // Costumer
@@ -80,8 +98,8 @@ router.route('/getProfile')
         const {country, accessToken} = query;
 
         return getProfile(country, accessToken)
-            .then(payload => promiseHandler(payload, response, query, 'getProfile'))
-            .catch(payload => promiseHandler(payload, response, query, 'getProfile'));
+            .then(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_PROFILE))
+            .catch(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_PROFILE));
     });
 
 router.route('/getProducts')
@@ -90,8 +108,8 @@ router.route('/getProducts')
         const {country, accessToken} = query;
 
         return getProducts(country, accessToken)
-            .then(payload => promiseHandler(payload, response, query, 'getProducts'))
-            .catch(payload => promiseHandler(payload, response, query, 'getProducts'));
+            .then(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_PRODUCTS))
+            .catch(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_PRODUCTS));
     });
 
 router.route('/getUsage')
@@ -100,8 +118,8 @@ router.route('/getUsage')
         const {country, accessToken} = query;
 
         return getUsage(country, accessToken)
-            .then(payload => promiseHandler(payload, response, query, 'getUsage'))
-            .catch(payload => promiseHandler(payload, response, query, 'getUsage'));
+            .then(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_USAGE))
+            .catch(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_USAGE));
     });
 
 router.route('/getWiFiRoamingStatus')
@@ -110,8 +128,8 @@ router.route('/getWiFiRoamingStatus')
         const {country, accessToken} = query;
 
         return getWiFiRoamingStatus(country, accessToken)
-            .then(payload => promiseHandler(payload, response, query, 'getWiFiRoamingStatus'))
-            .catch(payload => promiseHandler(payload, response, query, 'getWiFiRoamingStatus'));
+            .then(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_WIFI_ROAMING_STATUS))
+            .catch(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_WIFI_ROAMING_STATUS));
     });
 
 router.route('/postWiFiCredentials')
@@ -120,8 +138,8 @@ router.route('/postWiFiCredentials')
         const {country, accessToken, wifiPassword} = body;
 
         return postWiFiCredentials(country, accessToken, wifiPassword)
-            .then(payload => promiseHandler(payload, response, body, 'postWiFiCredentials'))
-            .catch(payload => promiseHandler(payload, response, body, 'postWiFiCredentials'));
+            .then(payload => promiseHandler(payload, response, body, SERVICES_IDS.POST_WIFI_CREDENTIALS))
+            .catch(payload => promiseHandler(payload, response, body, SERVICES_IDS.POST_WIFI_CREDENTIALS));
     });
 
 router.route('/communityWiFiOptIn')
@@ -130,8 +148,8 @@ router.route('/communityWiFiOptIn')
         const {country, accessToken, wifiPassword, userId} = body;
 
         return communityWiFiOptIn(country, accessToken, wifiPassword, userId)
-            .then(payload => promiseHandler(payload, response, body, 'communityWiFiOptIn'))
-            .catch(payload => promiseHandler(payload, response, body, 'communityWiFiOptIn'));
+            .then(payload => promiseHandler(payload, response, body, SERVICES_IDS.COMMUNITY_WIFI_OPT_IN))
+            .catch(payload => promiseHandler(payload, response, body, SERVICES_IDS.COMMUNITY_WIFI_OPT_IN));
     });
 
 router.route('/mobileAllowance')
@@ -140,8 +158,8 @@ router.route('/mobileAllowance')
         const {country, accessToken} = query;
 
         return getMobileAllowance(country, accessToken)
-            .then(payload => promiseHandler(payload, response, query, 'getMobileAllowance'))
-            .catch(payload => promiseHandler(payload, response, query, 'getMobileAllowance'));
+            .then(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_MOBILE_ALLOWANCE))
+            .catch(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_MOBILE_ALLOWANCE));
 
     })
     .post((request, response) => {
@@ -149,17 +167,21 @@ router.route('/mobileAllowance')
         const {country, accessToken, subscriberId, msisdn, currentAllowance} = body;
 
         const [allowanceData, ] = currentAllowance;
+        const {allowanceType} = allowanceData;
 
-        switch (allowanceData.allowanceType) {
+        switch (allowanceType) {
             case 'SPENDING':
                 return postMobileAllowance(country, accessToken, subscriberId, msisdn, currentAllowance)
-                    .then(payload => promiseHandler(payload, response, body, 'postMobileAllowanceSpending'))
-                    .catch(payload => promiseHandler(payload, response, body, 'postMobileAllowanceSpending'));
+                    .then(payload => promiseHandler(payload, response, body, SERVICES_IDS.POST_MOBILE_ALLOWANCE_SPENDING))
+                    .catch(payload => promiseHandler(payload, response, body, SERVICES_IDS.POST_MOBILE_ALLOWANCE_SPENDING));
 
             case 'ROAMING':
                 return postMobileAllowance(country, accessToken, subscriberId, msisdn, currentAllowance)
-                    .then(payload => promiseHandler(payload, response, body, 'postMobileAllowanceRoaming'))
-                    .catch(payload => promiseHandler(payload, response, body, 'postMobileAllowanceRoaming'));
+                    .then(payload => promiseHandler(payload, response, body, SERVICES_IDS.POST_MOBILE_ALLOWANCE_ROAMING))
+                    .catch(payload => promiseHandler(payload, response, body, SERVICES_IDS.POST_MOBILE_ALLOWANCE_ROAMING));
+
+            default:
+                throw new Error(`"${allowanceType}" – unknown allowanceType param`);
         }
     });
 
@@ -169,32 +191,37 @@ router.route('/getUserWiFiCredentials')
         const {country, accessToken} = query;
 
         return getUserWiFiCredentials(country, accessToken)
-            .then(payload => promiseHandler(payload, response, query, 'getUserWiFiCredentials'))
-            .catch(payload => promiseHandler(payload, response, query, 'getUserWiFiCredentials'));
+            .then(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_USER_WIFI_CREDENTIALS))
+            .catch(payload => promiseHandler(payload, response, query, SERVICES_IDS.GET_USER_WIFI_CREDENTIALS));
     });
 
-router.route('/logger/getRequests')
+router.route('/logger/getFailedRequests')
     .get((request, response) => {
-        const {country} = request;
-        if (!country) throw new Error(`Country param: "${country}" – wasn't received`);
+        const {query} = request;
+        const {country, serviceId} = query;
 
-        if (!Loggers[country]) {
-            Loggers[country] = new Logger(country);
+        if (!country) throw new Error(`country param: "${country}"`);
+        if (!serviceId) throw new Error(`serviceId param: "${serviceId}"`);
+
+        if (Loggers[country]) {
+            Loggers[country].getRequests(serviceId, {failed: true})
+                .then(payload => {
+                    response
+                        .status(response.statusCode)
+                        .json({requests: payload});
+                })
+                .catch(payload => {
+                    const {message} = payload;
+
+                    response
+                        .status(500)
+                        .json({message});
+                });
+        } else {
+            response
+                .status(200)
+                .json({requests: []});
         }
-
-        Loggers[country].getRequests()
-            .then(payload => {
-                response
-                    .status(response.statusCode)
-                    .json({requests: payload});
-            })
-            .catch(payload => {
-                const {message} = payload;
-
-                response
-                    .status(500)
-                    .json({message});
-            });
     });
 
 module.exports = router;

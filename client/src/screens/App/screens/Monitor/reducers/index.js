@@ -4,7 +4,6 @@ import heartbeat from '../components/Header/Heartbeat/reducer';
 import customer from '../components/Header/Customer/Login/reducer';
 import timer from '../components/Header/Timer/reducer';
 import servicesCheckers from '../components/Main/ServiceCheckersTable/ServiceChecker/reducer';
+import requestsDialog from '../components/Main/ServiceCheckersTable/RequestsDialog/reducer';
 
-const rootReducer = combineReducers({auth, customer, heartbeat, timer, servicesCheckers});
-
-export default rootReducer;
+export default combineReducers({auth, customer, heartbeat, timer, servicesCheckers, requestsDialog});

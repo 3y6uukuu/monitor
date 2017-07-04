@@ -18,6 +18,7 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "nskeymirror": "^0.1.2",
     "request": "^2.81.0",
     "winston": "^2.3.1",
     "winston-daily-rotate-file": "^1.4.6"

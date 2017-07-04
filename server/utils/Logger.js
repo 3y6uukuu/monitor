@@ -2,10 +2,11 @@ const winston = require('winston');
 const winstonDailyRotateFile = require('winston-daily-rotate-file');
 const fs = require('fs');
 const readline = require('readline');
+const {isUp, isDown} = require('./responseChecker');
 
 class Logger {
     constructor(country) {
-        if (!country) throw new Error(`Country param: "${country}" – wasn't received`);
+        if (!country) throw new Error(`country param: "${country}"`);
 
         this.logsDir = `logs/${country}`;
 
@@ -42,10 +43,6 @@ class Logger {
         }
     }
 
-    static isUp(statusCode) {
-        return (statusCode >= 200 && statusCode < 300);
-    }
-
     readLine() {
         const today = new Date().toISOString().slice(0, 10);
         const logFile = `./${this.logsDir}/${today}.log`;
@@ -67,16 +64,16 @@ class Logger {
      */
     write(service, params, statusCode, body) {
         return new Promise(resolve => {
-            const message = Logger.isUp(statusCode) ? 'Successful request' : body;
+            const message = isUp(statusCode) ? 'Successful request' : body;
             this.winstonLogger.error({service, params, statusCode, message}, () => resolve());
         });
     }
 
     /**
-     * @param {String} service name
+     * @param {String} serviceId
      * @returns {Promise}
      */
-    getRequestsQuantity(service) {
+    getRequestsQuantity(serviceId) {
         return new Promise((resolve, reject) => {
             try {
                 let failedRequests = 0;
@@ -85,9 +82,10 @@ class Logger {
                 this.readLine()
                     .on('line', line => {
                         const parsedLine = JSON.parse(line);
+                        const {service, statusCode} = parsedLine;
 
-                        if (parsedLine.service === service) {
-                            if (!Logger.isUp(parsedLine.statusCode)) failedRequests++;
+                        if (service === serviceId) {
+                            if (isDown(statusCode)) failedRequests++;
 
                             totalRequests++;
                         }
@@ -103,19 +101,44 @@ class Logger {
     }
 
     /**
+     * @param {String} serviceId
+     * @param {Object} options
      * @returns {Promise}
      */
-    getRequests() {
+    getRequests(serviceId, options) {
         return new Promise((resolve, reject) => {
             try {
                 let requests = '[';
 
                 this.readLine()
                     .on('line', line => {
-                        requests += (line + ',');
+                        const parsedLine = JSON.parse(line);
+                        const {service, statusCode} = parsedLine;
+
+                        if (service === serviceId) {
+                            const {successful, failed} = options;
+
+                            switch (true) {
+                                case successful:
+                                    if (isUp(statusCode)) requests += (line + ',');
+
+                                    break;
+
+                                case failed:
+                                    if (isDown(statusCode)) requests += (line + ',');
+
+                                    break;
+
+                                default:
+                                    requests += (line + ',');
+                            }
+                        }
                     })
                     .on('close', () => {
-                        requests = requests.slice(0, -1);
+                        if (requests !== '[') {
+                            requests = requests.slice(0, -1);
+                        }
+
                         requests += ']';
 
                         resolve(JSON.parse(requests));

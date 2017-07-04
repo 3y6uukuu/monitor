@@ -56,3 +56,12 @@ export const SLEEP = 'SLEEP';
 
 export const work = createAction(WORK);
 export const sleep = createAction(SLEEP);
+
+// Requests dialog
+export const UPDATE_REQUESTS_LIST = 'UPDATE_REQUESTS_LIST';
+export const OPEN_REQUESTS_DIALOG = 'OPEN_REQUESTS_DIALOG';
+export const CLOSE_REQUESTS_DIALOG = 'CLOSE_REQUESTS_DIALOG';
+
+export const updateRequestsList = createAction(UPDATE_REQUESTS_LIST);
+export const openRequestsDialog = createAction(OPEN_REQUESTS_DIALOG);
+export const closeRequestsDialog = createAction(CLOSE_REQUESTS_DIALOG);

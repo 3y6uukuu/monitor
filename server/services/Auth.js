@@ -25,7 +25,7 @@ function getAccessCode(country, userId, password) {
             break;
 
         default:
-            throw new Error(`"${country}" – unknown country param`);
+            throw new Error(`country param: "${country}"`);
     }
 
     return new Promise((resolve, reject) => {
@@ -74,7 +74,7 @@ function getAccessCode(country, userId, password) {
                     break;
 
                 default:
-                    throw new Error(`"${country}" – unknown country param`);
+                    throw new Error(`country param: "${country}"`);
             }
         });
     });

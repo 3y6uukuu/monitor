@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {openRequestsDialog} from '../../../../../actions';
 import {getRequests} from '../selectors';
 import {
     requestsCounter as requestsCounterStyles,
     failedRequests as failedRequestsStyles,
     totalRequests as totalRequestsStyles,
 } from './styles';
+
 
 class RequestsCounter extends Component {
     static propTypes = {
@@ -25,6 +27,10 @@ class RequestsCounter extends Component {
         }
     }
 
+    handleClick(serviceId) {
+        this.props.dispatch(openRequestsDialog({serviceId}));
+    }
+
     shouldComponentUpdate(nextProps) {
         const {failed, total} = nextProps.requests;
 
@@ -32,11 +38,11 @@ class RequestsCounter extends Component {
     }
 
     render() {
-        const {requests: {failed, total}} = this.props;
+        const {requests: {failed, total}, id} = this.props;
 
         return (
             <div style={requestsCounterStyles}>
-                <span style={failedRequestsStyles}>{failed}</span>
+                <span style={failedRequestsStyles} onClick={() => this.handleClick(id)} >{failed}</span>
                 <span style={totalRequestsStyles}> / {total}</span>
             </div>
         )

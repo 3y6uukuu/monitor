@@ -9,6 +9,7 @@ export const requestsCounter = {
 
 export const failedRequests = {
     color: pink500,
+    cursor: 'pointer',
 };
 
 export const totalRequests = {

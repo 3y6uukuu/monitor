@@ -15,9 +15,9 @@ import {
 
 function* handleGetRequests() {
     while (true) {
+        const {payload} = yield take(OPEN_REQUESTS_DIALOG);
         const country = yield select(countryFromStore);
 
-        const {payload} = yield take(OPEN_REQUESTS_DIALOG);
         const {serviceId} = payload;
 
         const {success} = yield call(getFailedRequestsApi, {country, serviceId});

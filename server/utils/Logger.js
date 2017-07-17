@@ -108,7 +108,7 @@ class Logger {
     getRequests(serviceId, options) {
         return new Promise((resolve, reject) => {
             try {
-                let requests = '[';
+                let requests = '';
 
                 this.readLine()
                     .on('line', line => {
@@ -135,13 +135,9 @@ class Logger {
                         }
                     })
                     .on('close', () => {
-                        if (requests !== '[') {
-                            requests = requests.slice(0, -1);
-                        }
+                        requests = requests.slice(0, -1);
 
-                        requests += ']';
-
-                        resolve(JSON.parse(requests));
+                        resolve(JSON.parse(`[${requests}]`));
                     });
 
             } catch (error) {

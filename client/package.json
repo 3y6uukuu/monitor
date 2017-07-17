@@ -1,45 +1,45 @@
 {
     "name": "react-monitor",
-    "version": "0.3.0",
+    "version": "0.3.5",
     "private": true,
     "homepage": "http://localhost",
     "dependencies": {
         "immutable": "^3.8.1",
-        "material-ui": "^0.18.3",
+        "material-ui": "^0.18.6",
         "moment": "^2.18.1",
         "nskeymirror": "^0.1.2",
-        "prop-types": "^15.5.7",
-        "react": "^15.5.3",
-        "react-dom": "^15.5.3",
-        "react-redux": "^5.0.3",
-        "react-router": "^4.0.0",
-        "react-router-redux": "^5.0.0-alpha.4",
+        "prop-types": "^15.5.10",
+        "react": "^15.6.1",
+        "react-dom": "^15.6.1",
+        "react-redux": "^5.0.5",
+        "react-router": "^4.1.2",
+        "react-router-redux": "^5.0.0-alpha.6",
         "react-tap-event-plugin": "^2.0.1",
-        "redux": "^3.6.0",
-        "redux-actions": "^2.0.1",
-        "redux-devtools-extension": "^2.13.0",
-        "redux-form": "^6.6.3",
+        "redux": "^3.7.2",
+        "redux-actions": "^2.2.1",
+        "redux-devtools-extension": "^2.13.2",
+        "redux-form": "^7.0.0",
         "redux-immutable": "^4.0.0",
         "redux-logger": "^3.0.6",
         "redux-persist-immutable": "^4.3.0",
-        "redux-saga": "^0.15.3",
-        "reselect": "^3.0.0",
-        "typeface-roboto": "0.0.22"
+        "redux-saga": "^0.15.4",
+        "reselect": "^3.0.1",
+        "typeface-roboto": "0.0.31"
     },
     "devDependencies": {
         "babel-eslint": "^7.2.3",
-        "eslint": "^3.19.0",
-        "eslint-config-react-app": "^1.0.1",
-        "eslint-plugin-flowtype": "^2.33.0",
-        "eslint-plugin-import": "^2.2.0",
-        "eslint-plugin-jsx-a11y": "^5.0.3",
-        "eslint-plugin-react": "^7.0.1",
-        "react-scripts": "1.0.7"
+        "eslint": "^4.2.0",
+        "eslint-config-react-app": "^1.0.5",
+        "eslint-plugin-import": "^2.7.0",
+        "eslint-plugin-jsx-a11y": "^6.0.2",
+        "eslint-plugin-react": "^7.1.0",
+        "react-scripts": "1.0.10"
     },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject"
-    }
+    },
+    "false": {}
 }

@@ -59,12 +59,22 @@ function updateMobileAllowanceParams(state, payload) {
 
         // TODO: get allowanceValue from currentAllowance
         const {subscriberId, msisdn} = payload.body[0].subscriberAllowances[0];
+        let currentAllowance = [];
 
-        if (mutableStateId === POST_MOBILE_ALLOWANCE_ROAMING) {
-            mutableState.mergeIn(['params'], fromJS({subscriberId, msisdn, currentAllowance: [{allowanceType: 'ROAMING', allowanceValue: 200}]}));
-        } else if (mutableStateId === POST_MOBILE_ALLOWANCE_SPENDING) {
-            mutableState.mergeIn(['params'], fromJS({subscriberId, msisdn, currentAllowance: [{allowanceType: 'SPENDING', allowanceValue: 300}]}));
+        switch (mutableStateId) {
+            case POST_MOBILE_ALLOWANCE_ROAMING:
+                currentAllowance = [{allowanceType: 'ROAMING', allowanceValue: 200}];
+                break;
+
+            case POST_MOBILE_ALLOWANCE_SPENDING:
+                currentAllowance = [{allowanceType: 'SPENDING', allowanceValue: 300}];
+                break;
+
+            default:
+                throw new Error('Unknown currentAllowance param');
         }
+
+        mutableState.mergeIn(['params'], fromJS({subscriberId, msisdn, currentAllowance}));
     }));
 }
 

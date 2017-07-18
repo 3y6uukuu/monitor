@@ -38,6 +38,6 @@ npm run start
 
 ## Configs
 ```
-server/config.js
+server/src/config.js
 client/src/config/index.js
 ```

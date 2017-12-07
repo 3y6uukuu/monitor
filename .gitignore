@@ -21,6 +21,9 @@
 .idea/**/gradle.xml
 .idea/**/libraries
 
+# CMake
+cmake-build-debug/
+
 # Mongo Explorer plugin:
 .idea/**/mongoSettings.xml
 
@@ -30,13 +33,16 @@
 ## Plugin-specific files:
 
 # IntelliJ
-/out/
+out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
 # JIRA plugin
 atlassian-ide-plugin.xml
+
+# Cursive Clojure plugin
+.idea/replstate.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
@@ -75,7 +81,7 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
+# Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
 # Dependency directories
@@ -102,6 +108,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
-
-.idea/

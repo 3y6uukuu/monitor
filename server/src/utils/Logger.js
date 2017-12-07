@@ -8,7 +8,7 @@ class Logger {
     constructor(country) {
         if (!country) throw new Error(`country param: "${country}"`);
 
-        this.logsDir = `logs/${country}`;
+        this.logsDir = `./logs/${country}`;
 
         Logger.mkdirSyncRecursive(this.logsDir);
 
@@ -45,7 +45,7 @@ class Logger {
 
     readLine() {
         const today = new Date().toISOString().slice(0, 10);
-        const logFile = `./${this.logsDir}/${today}.log`;
+        const logFile = `${this.logsDir}/${today}.log`;
 
         if (!fs.existsSync(logFile)) throw new Error(`Log file "${logFile}" doesn't exist`);
 
